@@ -1,3 +1,4 @@
+// Define where the routes are
 const routes = {
   github: require("./routes/github.js"),
   bitbucket: require("./routes/bitbucket.js"),
@@ -5,4 +6,5 @@ const routes = {
   npm: require("./routes/npm.js")
 }
 
+// Export them
 module.exports = { routes }
