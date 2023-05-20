@@ -11,15 +11,15 @@ const port = 3000;
 const cacheDuration = 60 * 1000;
 
 app.set('view engine', 'ejs')
-app.use(express.static(path.join(__dirname, 'build')))
 
-var githubRoute = require("./routes/github.js")
-var bitbucketRoute = require("./routes/bitbucket.js")
-var npmRoute = require("./routes/npm.js")
+// Route manager
+const { routes } = require("./routecontroller.js")
 
-app.get('/gh/:username/:repository/:branch/*', githubRoute);
-app.get('/bit/:username/:repository/:commit/*', bitbucketRoute);
-app.get('/npm/:package@:version/*', npmRoute);
+app.get('/', (req, res) => res.render('index'))
+app.get('/cdn/:username/:repository/:branch/*', routes.github);
+app.get('/bit/:username/:repository/:commit/*', routes.bitbucket);
+app.get('/cb/:username/:repository/:branch/*', routes.codeberg);
+app.get('/npm/:package@:version/*', routes.npm);5
 
 app.listen(port, () => {
   console.log(`Now running on port ${port}`);

@@ -3,12 +3,41 @@
   
 <head>
   <title>SimpleCDN</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css">
+  <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
 </head>
   
 <body>
-  <h1>SimpleCDN</h1>
-  <p>A fast, open-source CDN to deliver files from GitHub, Bitbucket, and npm.</p>
-  <h3>Delivering GitHub files</h3>
+  <h1>EchoCDN</h1>
+  <p>EchoCDN is an open-source CDN powered by Node.js that serves files from GitHub, Bitbucket, Codeberg, and npm, while delivering the proper Content-Type headers.</p>
+  <!--
+  app.get('/cdn/:username/:repository/:branch/*', routes.github);
+app.get('/bit/:username/:repository/:commit/*', routes.bitbucket);
+app.get('/cb/:username/:repository/:branch/*', routes.codeberg);
+app.get('/npm/:package@:version/*', routes.npm);
+  -->
+  <h3>Usage</h3>
+  <p>
+    GitHub:
+    <code>/cdn/:username/:repository/:branch/:filepath</code> <br>
+    
+    Bitbucket:
+    <code>/bit/:username/:repository/:commit/:filepath</code> <br>
+
+    Codeberg:
+    <code>/cb/:username/:repository/:branch/:filepath</code> <br>
+
+    zznpm:
+    <code>/npm/:package@:version/:filepath</code> <br>
+  </p>
+  
 </body>
+
+<script>
+  function redirect(url) {
+    window.location.href = url
+  }
+</script>
   
 </html>
