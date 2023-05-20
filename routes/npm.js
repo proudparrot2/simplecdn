@@ -1,8 +1,7 @@
 const request = require('request');
 const mime = require('mime-types');
 const cache = require('memory-cache');
-
-const cacheDuration = 60 * 1000;
+const { handleCache } = require("../utils/cachehandler.js")
 
 module.exports = (req, res) => {
   const { package, version } = req.params;
@@ -27,14 +26,6 @@ module.exports = (req, res) => {
       res.set('Content-Type', contentType);
       response.pipe(res);
 
-      const responseBody = [];
-      response.on('data', (chunk) => {
-        responseBody.push(chunk);
-      });
-
-      response.on('end', () => {
-        const fullResponse = Buffer.concat(responseBody).toString();
-        cache.put(fileURL, fullResponse, cacheDuration);
-      });
+      handleCache(response, fileURL)
     });
 }

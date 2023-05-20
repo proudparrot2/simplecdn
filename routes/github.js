@@ -1,15 +1,14 @@
 const request = require('request');
 const mime = require('mime-types');
 const cache = require('memory-cache');
-
-const cacheDuration = 60 * 1000;
+const { handleCache } = require("../utils/cachehandler.js")
 
 module.exports = (req, res) => {
   const { username, repository, branch } = req.params;
   const filePath = req.params[0];
 
   const fileURL = `https://raw.githubusercontent.com/${username}/${repository}/${branch}/${filePath}`;
-
+  
   const cachedResponse = cache.get(fileURL);
   if (cachedResponse) {
     return res.send(cachedResponse);
@@ -26,15 +25,9 @@ module.exports = (req, res) => {
 
       res.set('Content-Type', contentType);
       response.pipe(res);
-
-      const responseBody = [];
-      response.on('data', (chunk) => {
-        responseBody.push(chunk);
-      });
-
-      response.on('end', () => {
-        const fullResponse = Buffer.concat(responseBody).toString();
-        cache.put(fileURL, fullResponse, cacheDuration);
-      });
+      
+      handleCache(response, fileURL)
     });
 }
+
+handleCache

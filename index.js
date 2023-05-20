@@ -1,16 +1,11 @@
-// Packages
-const express = require('express');
-const mime = require('mime-types');
-const cache = require('memory-cache');
-const ejs = require('ejs')
-
 // Express stuff
+const express = require('express');
 const app = express();
 app.set('view engine', 'ejs')
 const port = process.env.PORT || 3000;
 
 // Route manager
-const { routes } = require("./routecontroller.js")
+const { routes } = require("./utils/routecontroller.js")
 
 app.get('/', (req, res) => res.render('index'))
 app.get('/cdn/:username/:repository/:branch/*', routes.github);
